@@ -33,11 +33,10 @@ public abstract class DigitalProductEntity extends ProductEntity {
 
     }
 
-
     @Override
-    public void sellItem(){
+    public void sellItem() {
         System.out.println("Sold digital product '" + title + "'. Download URL: " + downloadUrl);
-    };
+    }
 
     @Override
     public double getPrice() {
@@ -94,4 +93,5 @@ public abstract class DigitalProductEntity extends ProductEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), price, downloadUrl, title, author);
     }
+
 }
