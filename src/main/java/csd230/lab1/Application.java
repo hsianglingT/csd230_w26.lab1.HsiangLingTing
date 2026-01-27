@@ -47,6 +47,14 @@ public class Application  implements CommandLineRunner {
                 faker.code().isbn10());
         ;
 
+        BookEntity book2 = new BookEntity(
+                fakeBook.title(),
+                Double.parseDouble(priceString),
+                10,
+                fakeBook.author(),
+                faker.code().isbn10());
+        ;
+
         csd230.lab1.entities.MagazineEntity magazine = new csd230.lab1.entities.MagazineEntity(
                 faker.lorem().word() + " Magazine",
                 12.99,
@@ -56,6 +64,7 @@ public class Application  implements CommandLineRunner {
         );
 
         productRepository.save(book);
+        productRepository.save(book2);
         productRepository.save(magazine);
 
         CartEntity cart=new CartEntity();
@@ -63,13 +72,13 @@ public class Application  implements CommandLineRunner {
 
         // create a book
         // add book to the cart
-        cart.addProduct(book);
-
-        cartRepository.save(cart);
-
-        cart.addProduct(magazine);
-
-        cartRepository.save(cart);
+//        cart.addProduct(book);
+//
+//        cartRepository.save(cart);
+//
+//        cart.addProduct(magazine);
+//
+//        cartRepository.save(cart);
 
         // create an audiobook price, downloadUrl, title, author, narrator
         AudioBookEntity audiobook = new AudioBookEntity(
@@ -81,8 +90,8 @@ public class Application  implements CommandLineRunner {
 
         );
         productRepository.save(audiobook);
-        cart.addProduct(audiobook);
-        cartRepository.save(cart);
+//        cart.addProduct(audiobook);
+//        cartRepository.save(cart);
 
         // Create Ebook
         EbookEntity ebook = new EbookEntity(
@@ -93,8 +102,8 @@ public class Application  implements CommandLineRunner {
                 250
         );
         productRepository.save(ebook);
-        cart.addProduct(ebook);
-        cartRepository.save(cart);
+//        cart.addProduct(ebook);
+//        cartRepository.save(cart);
 
         // Create Ticket
         TicketEntity ticket = new TicketEntity(
@@ -102,8 +111,8 @@ public class Application  implements CommandLineRunner {
                 75.00
         );
         productRepository.save(ticket);
-        cart.addProduct(ticket);
-        cartRepository.save(cart);
+//        cart.addProduct(ticket);
+//        cartRepository.save(cart);
 
         // Create DiscMagazine
         DiscMagEntity discMag = new DiscMagEntity(
@@ -115,8 +124,8 @@ public class Application  implements CommandLineRunner {
                 true
         );
         productRepository.save(discMag);
-        cart.addProduct(discMag);
-        cartRepository.save(cart);
+//        cart.addProduct(discMag);
+//        cartRepository.save(cart);
 
 
         List<ProductEntity> allProducts = productRepository.findAll();
@@ -170,27 +179,27 @@ public class Application  implements CommandLineRunner {
         // cart and product have a many-to-many relationship
         // when deleting products, make sure to remove them from carts as well, otherwise the deletion in product table will fail
         // delete carts
-        cartRepository.deleteAll();
-        System.out.println("Carts deleted successfully.");
+//        cartRepository.deleteAll();
+//        System.out.println("Carts deleted successfully.");
 
 
         // delete some products
-        productRepository.delete(book);
-        productRepository.delete(ticket);
-        productRepository.delete(discMag);
-        productRepository.delete(magazine);
-        productRepository.delete(audiobook);
-        productRepository.delete(ebook);
-        System.out.println("----Print product details after deletion---");
-        allProducts = productRepository.findAll();
-        if (allProducts.isEmpty()) {
-            System.out.println("All products deleted successfully.");
-        } else {
-            for(ProductEntity p : allProducts) {
-                System.out.println(p.toString());
-            }
-        }
-        System.out.println("--------------------");
+//        productRepository.delete(book);
+//        productRepository.delete(ticket);
+//        productRepository.delete(discMag);
+//        productRepository.delete(magazine);
+//        productRepository.delete(audiobook);
+//        productRepository.delete(ebook);
+//        System.out.println("----Print product details after deletion---");
+//        allProducts = productRepository.findAll();
+//        if (allProducts.isEmpty()) {
+//            System.out.println("All products deleted successfully.");
+//        } else {
+//            for(ProductEntity p : allProducts) {
+//                System.out.println(p.toString());
+//            }
+//        }
+//        System.out.println("--------------------");
     }
 
 }

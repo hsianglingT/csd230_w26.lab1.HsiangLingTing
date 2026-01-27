@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Order</title>
+    </head>
+    <body>
+        <h1>Order Details</h1>
+        <div th:if="${order.products.empty}">
+            <p>Your order has no products.</p>
+        </div>
+        <table border="1" th:unless="${order.products.empty}">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>isbn</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${order.products}">
+                <td th:text="${product.title}"></td>
+                <td th:text="${product.author}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.isbn}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <hr style="border: 0; height: 2px; background: #ddd; margin: 30px 0;">
+        <h2>Order Summary</h2>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Total Amount Paid</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.orderDate}"></td>
+                <td th:text="${#numbers.formatDecimal(order.totalAmount, 2, 2)}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>
+            <a th:href="@{/books}">Back to books</a>
+        </p>
+    </body>
+</html>

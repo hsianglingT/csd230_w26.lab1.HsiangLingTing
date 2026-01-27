@@ -1,0 +1,162 @@
+classDiagram
+%% ========= INHERITANCE =========
+    ProductEntity <|-- PublicationEntity
+    ProductEntity <|-- TicketEntity
+    ProductEntity <|-- DigitalProductEntity
+    ProductEntity <-- CashTill
+
+    PublicationEntity <|-- BookEntity
+    PublicationEntity <|-- MagazineEntity
+    MagazineEntity <|-- DiscMagEntity
+
+    DigitalProductEntity <|-- EbookEntity
+    DigitalProductEntity <|-- AudioBookEntity
+
+%% ========= INTERFACES =========
+    SaleableItem <|.. ProductEntity
+    Serializable <|.. ProductEntity
+
+%% ========= ASSOCIATIONS =========
+    CartEntity "*" -- "*" ProductEntity : products
+    OrderEntity "*" -- "*" ProductEntity : products
+
+%% ========= CORE PRODUCT HIERARCHY =========
+    class ProductEntity {
+        <<abstract>>
+        -Long id
+        -Set~CartEntity~ carts
+        +getId() Long
+        +setId(Long id)
+        +getCarts() Set~CartEntity~
+        +setCarts(Set~CartEntity~ carts)
+        +sellItem()
+        +getPrice() double
+    }
+
+    class PublicationEntity {
+        <<abstract>>
+        -String title
+        -double price
+        -int copies
+        +PublicationEntity(String title, double price, int copies)
+        +sellItem()
+        +getPrice() double
+        +getTitle() String
+        +setTitle(String title)
+        +getCopies() int
+        +setCopies(int copies)
+    }
+
+    class BookEntity {
+        -String author
+        -String isbn
+        +BookEntity(...)
+        +getAuthor() String
+        +setAuthor(String author)
+        +getIsbn() String
+        +setIsbn(String isbn)
+    }
+
+    class MagazineEntity {
+        -int orderQty
+        -LocalDateTime currentIssue
+        +MagazineEntity(...)
+        +getOrderQty() int
+        +setOrderQty(int orderQty)
+        +getCurrentIssue() LocalDateTime
+        +setCurrentIssue(LocalDateTime currentIssue)
+    }
+
+    class DiscMagEntity {
+        -boolean hasDisc
+        +DiscMagEntity(...)
+        +isHasDisc() boolean
+        +setHasDisc(boolean hasDisc)
+    }
+
+    class TicketEntity {
+        -String description
+        -double price
+        +TicketEntity(String description, double price)
+        +sellItem()
+        +getPrice() double
+        +getDescription() String
+        +setDescription(String description)
+        +setPrice(double price)
+    }
+
+    class CartEntity {
+        -Long id
+        -Set~ProductEntity~ products
+        +addProduct(ProductEntity product)
+        +getId() Long
+        +setId(Long id)
+        +getProducts() Set~ProductEntity~
+        +setProducts(Set~ProductEntity~ products)
+    }
+
+    class OrderEntity {
+        -Long id
+        -double totalAmount
+        -LocalDateTime orderDate
+        -Set~ProductEntity~ products
+        +addProduct(ProductEntity product)
+        +getId() Long
+        +setId(Long id)
+        +getProducts() Set~ProductEntity~
+        +setProducts(Set~ProductEntity~ products)
+        +getTotalAmount()
+        +setTotalAmount(double totalAmount)
+        +LocalDateTime getOrderDate()
+        +setOrderDate(LocalDateTime orderDate)
+    }
+
+    class CashTill {
+        -double runningTotal
+        +CashTill()
+        +showTotal()
+        +sellItem(SaleableItem item)
+        +getRunningTotal() double
+    }
+
+    class SaleableItem {
+        <<interface>>
+        +sellItem()
+        +getPrice() double
+    }
+
+    class Serializable {
+        <<interface>>
+    }
+
+%% ========= NEW DIGITAL PRODUCT HIERARCHY =========
+    class DigitalProductEntity {
+        <<abstract>>
+        -double price
+        -String downloadUrl
+        -String title
+        -String author
+        +getPrice() double
+        +setPrice()
+        +getDownloadUrl() String
+        +setDownloadUrl()
+        +getTitle() String
+        +setTitle()
+        +getAuthor()
+        +setAuthor()
+        +sellItem()
+    }
+
+    class EbookEntity {
+        -Integer pages
+        +EbookEntity(...)
+        +getPages()
+        -setPages()
+    }
+
+    class AudioBookEntity {
+        -String narrator
+        +AudioBookEntity(...)
+        +getNarrator()
+        +setNarrator()
+    }

@@ -16,6 +16,10 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     private Long id;
     @ManyToMany(mappedBy = "products")
     private Set<CartEntity> carts = new HashSet<>();
+
+    @ManyToMany(mappedBy = "products")
+    private Set<OrderEntity> orders = new HashSet<>();
+
     public Set<CartEntity> getCarts() { return carts; }
     public void setCarts(Set<CartEntity> carts) { this.carts = carts; }
     public Long getId() { return id; }
@@ -34,6 +38,14 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     @Override
     public int hashCode() {
         return Objects.hash(id, carts);
+    }
+
+    public Set<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<OrderEntity> orders) {
+        this.orders = orders;
     }
 }
 
